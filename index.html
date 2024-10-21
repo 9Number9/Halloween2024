@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number 9</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Flavors');
+        body {
+            color: white;
+            font-family: 'Flavors', cursive;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+
+        .boton {
+            text-align: center;
+            font-size: 5vw;
+            font-family: 'Flavors', cursive;
+            color: red;
+            background-color: transparent;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        p {
+            text-align: center;
+            font-size: 24px;
+            font-family: 'Flavors', cursive;
+            color: red;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .content {
+            z-index: 1;
+        }
+
+        .boton-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%; 
+}
+
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 10vw;
+            }
+
+            .boton {
+                margin-top: 30px;
+                font-size: 10vw;
+            }
+
+            .datos {
+                width: 80vw;
+            }
+        }
+
+        .global {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .caja {
+            width: 100%;
+            border-color: red;
+            border-radius: 5vw;
+            background-color: transparent;
+            height: 40px;
+            font-family: 'Flavors', cursive;
+            text-align: center;
+            font-size: 50px;
+            color: red;
+            outline: none;
+        }
+
+        .datos {
+            width: 50vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-container">
+        <video playsinline autoplay muted loop id="bgvid">
+            <source src="horror2.mp4" type="video/mp4" alt="Video de fondo terrorífico">
+        </video>
+        <div class="content">
+            <header>
+                <h1><button class="boton" id="comenzarButton">COMENZAR</button></h1>
+            </header>
+            <div class="global">
+                <h1 class="boton" id="textoOculto1" style="display: none;">El camino es tu unica solucion: </h1>
+                <div class="datos">
+                    <input class="caja" type="text" id="miCaja" style="display:none;">
+                    <h1><button class="boton" id="validarButton" style="width: 150px;">INGRESAR</button></h1>
+                </div>
+            </div>
+            <h1 class="boton" id="textoOculto2" style="display: none;">¡Corre...te queda poco tiempo: </h1>
+            <h1 class="boton" id="cC"></h1>
+            <h1 class="boton" id="textoOculto3" style="display: none;"> -- ¡WARNING! -- CODIGO ERRONEO -- ¡WARNING! --</h1>
+        </div>
+    </div>
+
+    <audio id="miAudio" loop>
+        <source src="Sonido.mp3" type="audio/mpeg" alt="Sonido de fondo">
+    </audio>
+
+    <script>
+        var audio = document.getElementById("miAudio");
+        var comenzarButton = document.getElementById("comenzarButton");
+        var validarButton = document.getElementById("validarButton");
+        var textoOculto1 = document.getElementById("textoOculto1");
+        var textoOculto2 = document.getElementById("textoOculto2");
+        var textoOculto3 = document.getElementById("textoOculto3");
+        var miCaja = document.getElementById("miCaja");
+
+        function procesarEnter(event) {
+            if (event.key === "Enter") {
+                validarContenido();
+            }
+        }
+
+        validarButton.style.display = "none";
+        comenzarButton.addEventListener("click", function () {
+            audio.play();
+            comenzarButton.style.display = "none";
+            textoOculto1.style.display = "block";
+            miCaja.style.display = "block";
+            miCaja.focus();
+        });
+
+        function validarContenido() {
+            var tI = miCaja.value.trim().toLowerCase();
+            miCaja.value = "";
+
+            var cO = String.fromCharCode(116, 105, 99, 32, 116, 105, 99, 32, 101, 115, 32, 101, 108, 32, 115, 111, 110, 105, 100, 111, 32, 100, 101, 32, 116, 117, 32, 118, 105, 100, 97, 32, 97, 103, 111, 116, 97, 110, 100, 111, 115, 101);
+            var cC = String.fromCharCode(67, 85, 65, 78, 84, 65, 32, 83, 65, 78, 71, 82, 69, 32, 68, 69, 82, 82, 65, 77, 65, 82, 65, 83, 32, 80, 65, 82, 65, 32, 83, 69, 71, 85, 73, 82, 32, 86, 73, 86, 79);
+
+            if (tI === cO) {
+                textoOculto2.style.display = "block";
+                textoOculto3.style.display = "none";
+                
+                var elementoCC = document.getElementById("cC");
+
+                elementoCC.textContent = cC;
+                elementoCC.style.display = "block";
+
+                miCaja.style.display = "none";
+                validarButton.style.display = "none";
+            } else {
+                textoOculto2.style.display = "none";
+                textoOculto3.style.display = "block";
+            }
+        }
+
+        validarButton.addEventListener("click", validarContenido);
+        miCaja.addEventListener("keydown", procesarEnter);
+    </script>
+</body>
+
+</html>
